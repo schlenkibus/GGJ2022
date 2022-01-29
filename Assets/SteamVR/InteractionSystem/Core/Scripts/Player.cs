@@ -315,10 +315,12 @@ namespace Valve.VR.InteractionSystem
                 return;
             
 			Vector2 trackpad = TrackpadAction.GetAxis(MovementHand);
+			Vector3 raw = new Vector3(trackpad.x, 0, trackpad.y);
+			float speed = raw.magnitude;
 			Vector3 direction = Player.instance.hmdTransform.TransformDirection(new Vector3(trackpad.x, 0, trackpad.y));
 			if (trackpad.magnitude > Deadzone)
             {
-				gameObject.transform.position += MovementSpeed * Time.deltaTime * Vector3.ProjectOnPlane(direction, Vector3.up);
+				gameObject.transform.position += (speed * MovementSpeed) * Time.deltaTime * Vector3.ProjectOnPlane(direction, Vector3.up);
             }
 
 			if (headsetOnHead != null)
