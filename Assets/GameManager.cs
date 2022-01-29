@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     private int selectedMarket = 0;
     private bool marketConfirmed = false;
 
+    public GameState gameState;
+
     void Start()
     {
         
@@ -102,12 +104,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Received: " + uwr.downloadHandler.text);
-
-            string stripped = uwr.downloadHandler.text.Replace(']', ' ');
-            stripped = stripped.Replace('[', ' ');
-            stripped = stripped.Trim();
-            availableMarkets.AddRange(stripped.Split(','));
-            Debug.Log(availableMarkets);
+            gameState = JsonUtility.FromJson<GameState>(uwr.downloadHandler.text);
         }
     }
 }

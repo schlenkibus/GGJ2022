@@ -59,6 +59,7 @@
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\BodyTracking.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\Interaction\GrabPoint.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\Movement\ClimberHand.cs" />
+    <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\Movement\Climber.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\IK.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\FootMovment.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\HideHead.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\Interaction\GripController.cs" />
-    <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\GameState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
