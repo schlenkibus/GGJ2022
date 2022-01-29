@@ -18,9 +18,9 @@ public class ShelfTrigger : MonoBehaviour
     {   
     }
 
-    void onTriggerEntered(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Item")
+        if (other.gameObject.tag == "Item")
         {
             onItemStocked.Invoke();
         }

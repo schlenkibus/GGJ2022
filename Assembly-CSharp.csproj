@@ -73,6 +73,8 @@
     <Compile Include="Assets\GameState.cs" />
     <Compile Include="Assets\ShelfMiniGame.cs" />
     <Compile Include="Assets\ShelfTrigger.cs" />
+    <Compile Include="Assets\GoodJobSound.cs" />
+    <Compile Include="Assets\ItemDispenser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

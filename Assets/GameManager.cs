@@ -53,9 +53,7 @@ public class GameManager : MonoBehaviour
             marketName.text = uwr.error;
         }
         else
-        {
-            Debug.Log("Received: " + uwr.downloadHandler.text);
-            
+        {            
             string stripped = uwr.downloadHandler.text.Replace(']', ' ');
             stripped = stripped.Replace('[', ' ');
             stripped = stripped.Replace('"', ' ');
@@ -68,23 +66,23 @@ public class GameManager : MonoBehaviour
 
     public void onItemStocked()
     {
+        Debug.Log("onItemStocked");
         StartCoroutine(sendItemUpdate());
     }
 
     IEnumerator sendItemUpdate()
     {
+        Debug.Log("sendItemUpdateCoroutine");
         UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/stock-shelf/" + availableMarkets[selectedMarket]);
         yield return uwr.SendWebRequest();
 
         if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
         {
             Debug.Log("Error While Sending: " + uwr.error);
-            marketName.text = uwr.error;
         }
         else
         {
             Debug.Log("Received: " + uwr.downloadHandler.text);
-            StartCoroutine(getGameUpdate());
         }
     }
 
@@ -116,19 +114,22 @@ public class GameManager : MonoBehaviour
 
     IEnumerator getGameUpdate()
     {
-        UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/game-update/" + availableMarkets[selectedMarket]);
-        yield return uwr.SendWebRequest();
+        while (true)
+        {
+            UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/game-update/" + availableMarkets[selectedMarket]);
+            yield return uwr.SendWebRequest();
 
-        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
-        {
-            Debug.Log("Error While Sending: " + uwr.error);
-            marketName.text = uwr.error;
-        }
-        else
-        {
-            Debug.Log("Received: " + uwr.downloadHandler.text);
-            GameState state = JsonUtility.FromJson<GameState>(uwr.downloadHandler.text);
-            applyChanges(state);
+            if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
+            {
+                Debug.Log("Error While Sending: " + uwr.error);
+            }
+            else
+            {
+                GameState state = JsonUtility.FromJson<GameState>(uwr.downloadHandler.text);
+                applyChanges(state);
+            }
+
+            yield return new WaitForSeconds(1f);
         }
     }
 

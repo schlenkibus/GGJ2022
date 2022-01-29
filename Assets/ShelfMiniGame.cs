@@ -9,7 +9,7 @@ public class ShelfMiniGame : MonoBehaviour
     public TextMesh itemsNeeded;
     public TextMesh itemsDone;
     public TextMesh level;
-
+    public AudioSource tickPlayer;
     void Start()
     {
 
@@ -23,6 +23,7 @@ public class ShelfMiniGame : MonoBehaviour
 
     public void onItemAddedToShelf()
     {
+        Debug.Log("Item Added on Client Side!");
         int oldItems = int.Parse(itemsDone.text);
         oldItems++;
         itemsDone.text = oldItems.ToString();
@@ -30,25 +31,26 @@ public class ShelfMiniGame : MonoBehaviour
 
     public void setLevel(int l)
     {
-        Debug.Log(l);
         level.text = l.ToString();
     }
 
     public void setTimer(int t)
     {
-        Debug.Log(t);
+        int oldTime = int.Parse(timer.text);
+        if(t < oldTime)
+        {
+            tickPlayer.Play();
+        }
         timer.text = t.ToString();
     }
 
     public void setItemsNeeded(int needed)
     {
-        Debug.Log(needed);
         itemsNeeded.text = needed.ToString();
     }
 
     public void setItemsDone(int done)
     {
-        Debug.Log(done);
         itemsDone.text = done.ToString();
     }
 }
