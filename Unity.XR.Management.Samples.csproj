@@ -56,8 +56,8 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Samples\XR Plugin Management\4.0.1\Example XR Management implementation\SampleConstants.cs" />
     <Compile Include="Assets\Samples\XR Plugin Management\4.0.1\Example XR Management implementation\SampleSettings.cs" />
+    <Compile Include="Assets\Samples\XR Plugin Management\4.0.1\Example XR Management implementation\SampleConstants.cs" />
     <Compile Include="Assets\Samples\XR Plugin Management\4.0.1\Example XR Management implementation\SampleLoader.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -304,14 +304,14 @@
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.5.7\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
+    <Reference Include="Valve.Newtonsoft.Json">
+      <HintPath>Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.5.7\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
-    </Reference>
-    <Reference Include="Valve.Newtonsoft.Json">
-      <HintPath>Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

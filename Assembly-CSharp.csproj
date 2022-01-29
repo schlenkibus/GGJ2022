@@ -56,19 +56,20 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\BodyTracking.cs" />
+    <Compile Include="Assets\VR Instincts\Scripts\Interaction\GrabPoint.cs" />
+    <Compile Include="Assets\VR Instincts\Scripts\Movement\ClimberHand.cs" />
+    <Compile Include="Assets\VR Instincts\Scripts\Movement\Climber.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
+    <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\IK.cs" />
+    <Compile Include="Assets\VR Instincts\Scripts\Interaction\Interactable.cs" />
+    <Compile Include="Assets\VR Instincts\Scripts\Interaction\Grabber.cs" />
+    <Compile Include="Assets\VR Instincts\Scripts\Interaction\PoleGrip.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\Movement\Player.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\FootMovment.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\Movement\Climber.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\Interaction\GrabPoint.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\Interaction\PoleGrip.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\BodyTracking.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\IK.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\Interaction\GripController.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\Interaction\Grabber.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\Interaction\Interactable.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\HideHead.cs" />
-    <Compile Include="Assets\VR Instincts\Scripts\Movement\ClimberHand.cs" />
+    <Compile Include="Assets\VR Instincts\Scripts\Interaction\GripController.cs" />
+    <Compile Include="Assets\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -293,11 +294,11 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Valve.Newtonsoft.Json">
       <HintPath>Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.13f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -647,20 +648,26 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.XR.OpenVR">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenVR.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    <Reference Include="Unity.XR.Management.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.Management.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Subsystem.Registration">
+      <HintPath>Library\ScriptAssemblies\Unity.Subsystem.Registration.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
@@ -674,20 +681,8 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.XR.OpenVR">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.OpenVR.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>Library\ScriptAssemblies\UnityEngine.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.Management">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.Management.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.Management.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.XR.Management.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Subsystem.Registration">
-      <HintPath>Library\ScriptAssemblies\Unity.Subsystem.Registration.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.OpenVR.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.XR.OpenVR.Editor.dll</HintPath>
@@ -695,8 +690,14 @@
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
       <HintPath>Library\ScriptAssemblies\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
       <HintPath>Library\ScriptAssemblies\UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.Management">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.Management.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.SpatialTracking">
       <HintPath>Library\ScriptAssemblies\UnityEditor.SpatialTracking.dll</HintPath>
@@ -707,13 +708,13 @@
       <Project>{DAE8450A-9168-B5DA-2A65-C88499F84114}</Project>
       <Name>SteamVR_Input_Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="SteamVR_Editor.csproj">
-      <Project>{9F2C3F75-E0CC-B5A5-DB5F-6A3E5E5B1390}</Project>
-      <Name>SteamVR_Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="SteamVR.csproj">
       <Project>{4F99D3FB-4119-9A25-BBB3-ADA5BC2356B7}</Project>
       <Name>SteamVR</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.XR.Management.Samples.Editor.csproj">
+      <Project>{E8E07FC4-8354-285D-487A-182A89A67BA4}</Project>
+      <Name>Unity.XR.Management.Samples.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="SteamVR_Windows_EditorHelper.csproj">
       <Project>{165C026A-0D83-75E9-D449-4E91B130DFBB}</Project>
@@ -723,13 +724,13 @@
       <Project>{F9681356-8CB2-BF06-015D-C167E3AD4F1D}</Project>
       <Name>SteamVR_Actions</Name>
     </ProjectReference>
+    <ProjectReference Include="SteamVR_Editor.csproj">
+      <Project>{9F2C3F75-E0CC-B5A5-DB5F-6A3E5E5B1390}</Project>
+      <Name>SteamVR_Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.XR.Management.Samples.csproj">
       <Project>{F4C023DF-AFD0-3AB0-D024-92847EB12E63}</Project>
       <Name>Unity.XR.Management.Samples</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.XR.Management.Samples.Editor.csproj">
-      <Project>{E8E07FC4-8354-285D-487A-182A89A67BA4}</Project>
-      <Name>Unity.XR.Management.Samples.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -48,6 +48,7 @@ namespace Valve.VR.InteractionSystem
 		public SteamVR_Action_Vector2 TrackpadAction;
 		public float Deadzone;//the Deadzone of the trackpad. used to prevent unwanted walking.
 
+		private bool initialized = false;
 
 		//-------------------------------------------------
 		// Singleton instance of the Player. Only one can exist at a time.
@@ -440,8 +441,14 @@ namespace Valve.VR.InteractionSystem
 				audioListener.transform.localPosition = Vector3.zero;
 				audioListener.transform.localRotation = Quaternion.identity;
 			}
+
+			initialized = true;
 		}
 
+		public bool isInitialized()
+        {
+			return initialized;
+        }
 
 		//-------------------------------------------------
 		public void PlayerShotSelf()
