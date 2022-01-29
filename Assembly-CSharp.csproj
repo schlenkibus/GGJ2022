@@ -71,6 +71,8 @@
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\HideHead.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\Interaction\GripController.cs" />
     <Compile Include="Assets\GameState.cs" />
+    <Compile Include="Assets\ShelfMiniGame.cs" />
+    <Compile Include="Assets\ShelfTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

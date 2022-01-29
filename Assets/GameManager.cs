@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour
@@ -20,6 +21,11 @@ public class GameManager : MonoBehaviour
     private bool marketConfirmed = false;
 
     public GameState gameState;
+    public UnityEvent<bool> onShelvesActivateStateChanged;
+    public UnityEvent<int> onNumShelvesItemNeededChanged;
+    public UnityEvent<int> onNumShelvesItemStockedChanged;
+    public UnityEvent<int> onShelvesTimeChanged;
+    public UnityEvent<int> onLevelChanged;
 
     void Start()
     {
@@ -60,9 +66,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void test()
+    public void onItemStocked()
     {
-        Debug.Log("Button Pressed");
+        StartCoroutine(sendItemUpdate());
+    }
+
+    IEnumerator sendItemUpdate()
+    {
+        UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/stock-shelf/" + availableMarkets[selectedMarket]);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
+        {
+            Debug.Log("Error While Sending: " + uwr.error);
+            marketName.text = uwr.error;
+        }
+        else
+        {
+            Debug.Log("Received: " + uwr.downloadHandler.text);
+            StartCoroutine(getGameUpdate());
+        }
     }
 
     public void onNext()
@@ -104,7 +127,18 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Received: " + uwr.downloadHandler.text);
-            gameState = JsonUtility.FromJson<GameState>(uwr.downloadHandler.text);
+            GameState state = JsonUtility.FromJson<GameState>(uwr.downloadHandler.text);
+            applyChanges(state);
         }
+    }
+
+    public void applyChanges(GameState newState)
+    {
+        onShelvesActivateStateChanged.Invoke(newState.activated);
+        onNumShelvesItemStockedChanged.Invoke(newState.itemsStocked);
+        onNumShelvesItemNeededChanged.Invoke(newState.itemsNeeded);
+        onShelvesTimeChanged.Invoke(newState.timer);
+        onLevelChanged.Invoke(newState.level);
+        gameState = newState;
     }
 }
