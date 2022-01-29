@@ -10,6 +10,10 @@ public class ShelfMiniGame : MonoBehaviour
     public TextMesh itemsDone;
     public TextMesh level;
     public AudioSource tickPlayer;
+    public AudioSource alarmPlayer;
+
+    private bool isActive;
+
     void Start()
     {
 
@@ -19,6 +23,16 @@ public class ShelfMiniGame : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void onActiveStatusChanged(bool status)
+    {
+        if(status != isActive)
+        {
+            alarmPlayer.Play();
+        }
+
+        isActive = status;
     }
 
     public void onItemAddedToShelf()
