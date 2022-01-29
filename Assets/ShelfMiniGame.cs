@@ -27,7 +27,7 @@ public class ShelfMiniGame : MonoBehaviour
 
     public void onActiveStatusChanged(bool status)
     {
-        if(status != isActive)
+        if(status == true && isActive == false)
         {
             alarmPlayer.Play();
         }
@@ -45,7 +45,14 @@ public class ShelfMiniGame : MonoBehaviour
 
     public void setLevel(int l)
     {
-        level.text = l.ToString();
+        if(l == -1)
+        {
+            level.text = "Task Failed!";
+        }
+        else
+        {
+            level.text = l.ToString();
+        }
     }
 
     public void setTimer(int t)

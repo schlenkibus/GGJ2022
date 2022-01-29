@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public UnityEvent<int> onNumShelvesItemStockedChanged;
     public UnityEvent<int> onShelvesTimeChanged;
     public UnityEvent<int> onLevelChanged;
+    public UnityEvent<float> onPlayerMoneyChanged;
+    public UnityEvent<float> onBossMoneyChanged;
 
     void Start()
     {
@@ -139,6 +141,8 @@ public class GameManager : MonoBehaviour
         onNumShelvesItemStockedChanged.Invoke(newState.itemsStocked);
         onNumShelvesItemNeededChanged.Invoke(newState.itemsNeeded);
         onShelvesTimeChanged.Invoke(newState.timer);
+        onPlayerMoneyChanged.Invoke(newState.playerMoney);
+        onBossMoneyChanged.Invoke(newState.bossMoney);
         onLevelChanged.Invoke(newState.level);
         gameState = newState;
     }
