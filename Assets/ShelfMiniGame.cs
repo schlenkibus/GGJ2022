@@ -37,10 +37,12 @@ public class ShelfMiniGame : MonoBehaviour
 
     public void onItemAddedToShelf()
     {
-        Debug.Log("Item Added on Client Side!");
-        int oldItems = int.Parse(itemsDone.text);
-        oldItems++;
-        itemsDone.text = oldItems.ToString();
+        if(isActive)
+        {
+            int oldItems = int.Parse(itemsDone.text);
+            oldItems++;
+            itemsDone.text = oldItems.ToString();
+        }
     }
 
     public void setLevel(int l)

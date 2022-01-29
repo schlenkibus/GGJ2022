@@ -26,6 +26,13 @@ public class GameManager : MonoBehaviour
     public UnityEvent<int> onNumShelvesItemStockedChanged;
     public UnityEvent<int> onShelvesTimeChanged;
     public UnityEvent<int> onLevelChanged;
+
+    public UnityEvent<bool> onRegisterActivateStateChanged;
+    public UnityEvent<int> onNumRegisterItemNeededChanged;
+    public UnityEvent<int> onNumRegisterItemStockedChanged;
+    public UnityEvent<int> onRegisterTimeChanged;
+    public UnityEvent<int> onRegisterLevelChanged;
+
     public UnityEvent<float> onPlayerMoneyChanged;
     public UnityEvent<float> onBossMoneyChanged;
 
@@ -62,20 +69,44 @@ public class GameManager : MonoBehaviour
             stripped = stripped.Trim();
             availableMarkets.AddRange(stripped.Split(','));
             marketName.text = availableMarkets[selectedMarket];
-            Debug.Log(availableMarkets);
         }
     }
 
     public void onItemStocked()
     {
-        Debug.Log("onItemStocked");
-        StartCoroutine(sendItemUpdate());
+        if(gameState.activated)
+        {
+            StartCoroutine(sendItemUpdate());
+        }
+    }
+
+    public void onItemScanned()
+    {
+        if(gameState.register_activated)
+        {
+            Debug.Log("onItemScanned");
+            StartCoroutine(sendScannedItem());
+        }
     }
 
     IEnumerator sendItemUpdate()
     {
-        Debug.Log("sendItemUpdateCoroutine");
         UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/stock-shelf/" + availableMarkets[selectedMarket]);
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
+        {
+            Debug.Log("Error While Sending: " + uwr.error);
+        }
+        else
+        {
+            Debug.Log("Received: " + uwr.downloadHandler.text);
+        }
+    }
+
+    IEnumerator sendScannedItem()
+    {
+        UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/scan-item/" + availableMarkets[selectedMarket]);
         yield return uwr.SendWebRequest();
 
         if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
@@ -131,19 +162,30 @@ public class GameManager : MonoBehaviour
                 applyChanges(state);
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.0f);
         }
     }
 
     public void applyChanges(GameState newState)
     {
+        //Shelf!
         onShelvesActivateStateChanged.Invoke(newState.activated);
         onNumShelvesItemStockedChanged.Invoke(newState.itemsStocked);
         onNumShelvesItemNeededChanged.Invoke(newState.itemsNeeded);
         onShelvesTimeChanged.Invoke(newState.timer);
+        onLevelChanged.Invoke(newState.level);
+
+        //Global!
         onPlayerMoneyChanged.Invoke(newState.playerMoney);
         onBossMoneyChanged.Invoke(newState.bossMoney);
-        onLevelChanged.Invoke(newState.level);
+
+        //Register
+        onRegisterActivateStateChanged.Invoke(newState.register_activated);
+        onRegisterLevelChanged.Invoke(newState.register_level);
+        onRegisterTimeChanged.Invoke(newState.register_timer);
+        onNumRegisterItemNeededChanged.Invoke(newState.register_itemsNeeded);
+        onNumRegisterItemStockedChanged.Invoke(newState.register_itemsStocked);
+
         gameState = newState;
     }
 }

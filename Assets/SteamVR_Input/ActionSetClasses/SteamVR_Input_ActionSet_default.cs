@@ -113,11 +113,11 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Vibration Haptic
+        public virtual SteamVR_Action_Vibration haptic
         {
             get
             {
-                return SteamVR_Actions.default_Haptic;
+                return SteamVR_Actions.default_haptic;
             }
         }
     }

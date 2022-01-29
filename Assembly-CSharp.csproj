@@ -72,10 +72,13 @@
     <Compile Include="Assets\VR Instincts\Scripts\Movement\Player.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\FootMovment.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\BodyTracking\HideHead.cs" />
+    <Compile Include="Assets\ItemBand.cs" />
+    <Compile Include="Assets\MoneyCounters.cs" />
     <Compile Include="Assets\ShelfMiniGame.cs" />
     <Compile Include="Assets\GoodJobSound.cs" />
     <Compile Include="Assets\VR Instincts\Scripts\Interaction\GripController.cs" />
-    <Compile Include="Assets\MoneyCounters.cs" />
+    <Compile Include="Assets\RegisterMinigame.cs" />
+    <Compile Include="Assets\RegisterTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
