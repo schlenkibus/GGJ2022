@@ -36,12 +36,14 @@ public class GameManager : MonoBehaviour
     public UnityEvent<float> onPlayerMoneyChanged;
     public UnityEvent<float> onBossMoneyChanged;
 
+    public Transform corner1;
+    public Transform corner2;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(player.isInitialized() && !playerInitialized)
@@ -58,7 +60,6 @@ public class GameManager : MonoBehaviour
 
         if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
         {
-            Debug.Log("Error While Sending: " + uwr.error);
             marketName.text = uwr.error;
         }
         else
@@ -84,7 +85,6 @@ public class GameManager : MonoBehaviour
     {
         if(gameState.register_activated)
         {
-            Debug.Log("onItemScanned");
             StartCoroutine(sendScannedItem());
         }
     }
@@ -93,29 +93,32 @@ public class GameManager : MonoBehaviour
     {
         UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/stock-shelf/" + availableMarkets[selectedMarket]);
         yield return uwr.SendWebRequest();
-
-        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
-        {
-            Debug.Log("Error While Sending: " + uwr.error);
-        }
-        else
-        {
-            Debug.Log("Received: " + uwr.downloadHandler.text);
-        }
     }
 
     IEnumerator sendScannedItem()
     {
         UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/scan-item/" + availableMarkets[selectedMarket]);
         yield return uwr.SendWebRequest();
+    }
 
-        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
+    IEnumerator sendPlayerPostion()
+    {
+        while(true)
         {
-            Debug.Log("Error While Sending: " + uwr.error);
-        }
-        else
-        {
-            Debug.Log("Received: " + uwr.downloadHandler.text);
+            Vector3 pos = player.transform.position;
+            Vector3 maxV = Vector3.Max(corner1.transform.position, corner2.transform.position);
+            Vector3 minV = Vector3.Min(corner1.transform.position, corner2.transform.position);
+
+            pos -= minV;
+            maxV -= minV;
+            pos.x /= maxV.x;
+            pos.x = Mathf.Max(0, Mathf.Min(1 - pos.x, 1));
+            pos.z /= maxV.z;
+            pos.z= Mathf.Max(0, Mathf.Min(pos.z, 1));
+
+            UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/player-position/" + availableMarkets[selectedMarket] + "/" + pos.x + "/" + pos.z);
+            yield return uwr.SendWebRequest();
+            yield return new WaitForSeconds(1);
         }
     }
 
@@ -143,6 +146,7 @@ public class GameManager : MonoBehaviour
     {
         marketConfirmed = true;
         StartCoroutine(getGameUpdate());
+        StartCoroutine(sendPlayerPostion());
     }
 
     IEnumerator getGameUpdate()
