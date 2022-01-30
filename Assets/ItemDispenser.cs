@@ -13,7 +13,9 @@ public class ItemDispenser : MonoBehaviour
 
     public List<GameObject> spawnedItems;
 
+    public List<AudioClip> clips;
     private int idx = 0;
+    private int audioIdx = 0;
 
     void Start()
     {
@@ -29,11 +31,14 @@ public class ItemDispenser : MonoBehaviour
     public void dispenseItem()
     {
         ps.Play();
+        aus.clip = clips[audioIdx];
         aus.Play();
         Vector3 pos = spawnPostion.transform.position;
 
         spawnedItems.Add(Instantiate(prefabs[idx], pos, new Quaternion(0, 0, 0, 0), null));
         idx += 1;
         idx %= prefabs.Length;
+        audioIdx += 1;
+        audioIdx %= clips.Count;
     }
 }

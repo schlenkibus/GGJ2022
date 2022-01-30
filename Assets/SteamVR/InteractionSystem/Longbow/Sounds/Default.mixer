@@ -41,7 +41,7 @@ AudioMixerEffectController:
     m_GUID: bc6caff81cef7f54f9c16d7facb3a560
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
-  m_Bypass: 1
+  m_Bypass: 0
 --- !u!244 &-2504587570190751776
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -152,6 +152,7 @@ AudioMixerSnapshotController:
     89a97e9170325344a8360b379e4e84fd: 0.13
     d0bc96c109cf25a469a65f85eae7922b: -10000
     564d3cb27276ec94a838960453961b50: 13
+    4349c2334661e00478799956bf2caae4: 0
     f5822ff3dbf5d7c44911f2ef0d93de24: 0.871
     1d9811448e4a3d24d865c72e3884f2ad: 7.22
     de40c484fe6d1d94a9cf93e3edc18da8: 1
@@ -165,6 +166,7 @@ AudioMixerSnapshotController:
     233607f7acccb9043a9d117428ac8f1c: -12.5
     42d69b58d69a0854abf616765b878f52: 7.43
     6e3f2619ed3a9d342aec7e858afe008c: -2814
+    dcc9bf59471d99b448b7f891dd952597: 0.0465
     512496a9059f65e4b938cde764c48665: 0.709
     ab42ebf99d066b24c96ca30db6136b6d: 0
     10fe620a4505ace4da2bd993e9760a4d: -2322
@@ -173,11 +175,12 @@ AudioMixerSnapshotController:
     f45e802b3256351499a6846ab8423b51: 2
     8d9bd45b10f2f2a4197200aea62647bc: 0
     dc85febbf39cccd48a2270c4ab8ddac5: 0.674
-    59d18d4c960ac484aa19a6ece50f3f4b: -10000
+    59d18d4c960ac484aa19a6ece50f3f4b: 0
     205276bcd95c3e640a057410b50805ab: 0.1
     8131d3ece3cbf614fb898a4196818cdb: 1
     f836efec498b4d84eb97c6d86e4c02df: 20000
     79f1a92d1185c7941b99b521432b5180: 0.1
+    838dc16dbd81d4049a22f7e272f46144: 2792
     fff4fe6d34fbbed40afa9265873b0d84: -445
     2ff8a2cd3cf1a0248ae45d0b75f8ba6a: -4601
     2ee4b08e9b0d0014dae93d77e97d0576: 1
@@ -185,9 +188,11 @@ AudioMixerSnapshotController:
     3df8bcae36a33d54794216d2603a9631: 0.3
     ac2617ce76931be429db8efef91c6997: 16
     5b6cd8ce5599bf44c9f07cdfca97520b: 330
+    5a847feea6be205449ecabdb9b8de6e5: 100
     f811572fe94bd284b8918f522ed19764: -0.188
     1574c54fb902c8e489d55c474511bce0: 0.576
     efd2d28fa70ef09458284e9ce37449b8: 0.712
+    8add11ff8c423f6479626bf499037425: 0
   m_TransitionOverrides: {}
 --- !u!243 &243078391499754788
 AudioMixerGroupController:
