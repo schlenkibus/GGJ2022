@@ -23,11 +23,11 @@ public class MoneyCounters : MonoBehaviour
 
     public void onPlayerMoneyChanged(float m)
     {
-        playerM.text = m.ToString();
+        playerM.text = "You made: " + m.ToString() + "$";
     }
 
     public void onBossMoneyChanged(float m)
     {
-        bossM.text = m.ToString();
+        bossM.text = "Your Boss made: " + m.ToString() + "$";
     }
 }

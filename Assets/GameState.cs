@@ -22,6 +22,7 @@ public class GameState
 
     public static GameState CreateFromJSON(string jsonString)
     {
+        Debug.Log(jsonString);
         return JsonUtility.FromJson<GameState>(jsonString);
     }
     //{"activated": false, "level": 1, "timer": 0, "itemsNeeded": 10, "itemsStocked": 0, "playerMoney": 0, "bossMoney": 0}
