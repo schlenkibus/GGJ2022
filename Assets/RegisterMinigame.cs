@@ -34,15 +34,11 @@ public class RegisterMinigame : MonoBehaviour
 
     private IEnumerator spawnItems(int numItems)
     {
-        Debug.Log("I am spawing Stuff");
-
         float timePerItem = 60 / numItems;
         for(int i = 0; i < numItems; i++)
         {
             yield return new WaitForSeconds(Random.Range(0.3f, timePerItem));
-            Debug.Log("I am spawing Stuff");
-            Vector3 pos = spawnPoint.position;
-            createdObjects.Add(Instantiate(items[idx], pos, new Quaternion(0, 0, 0, 0), null));
+            createdObjects.Add(Instantiate(items[idx], spawnPoint.position, new Quaternion(0, 0, 0, 0), null));
             idx += 1;
             idx %= items.Length;
         }
@@ -66,7 +62,6 @@ public class RegisterMinigame : MonoBehaviour
 
     public void onItemScanned()
     {
-        Debug.Log("Item Scanned on Client Side!");
         redLight.enabled = true;
         beep.Play();
         int oldItems = int.Parse(itemsDone.text);

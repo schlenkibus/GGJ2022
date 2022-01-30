@@ -55,19 +55,14 @@ public class GameManager : MonoBehaviour
 
     IEnumerator listAvailableGames()
     {
-        UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/list-raw");
+        UnityWebRequest uwr = UnityWebRequest.Get("http://schlenkibus.de:8000/list-raw");
         yield return uwr.SendWebRequest();
 
         if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
-        {
             marketName.text = uwr.error;
-        }
         else
         {            
-            string stripped = uwr.downloadHandler.text.Replace(']', ' ');
-            stripped = stripped.Replace('[', ' ');
-            stripped = stripped.Replace('"', ' ');
-            stripped = stripped.Trim();
+            string stripped = uwr.downloadHandler.text.Replace(']', ' ').Replace('[', ' ').Replace('"', ' ').Trim();
             availableMarkets.AddRange(stripped.Split(','));
             marketName.text = availableMarkets[selectedMarket];
         }
@@ -91,13 +86,13 @@ public class GameManager : MonoBehaviour
 
     IEnumerator sendItemUpdate()
     {
-        UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/stock-shelf/" + availableMarkets[selectedMarket]);
+        UnityWebRequest uwr = UnityWebRequest.Get("http://schlenkibus.de:8000/stock-shelf/" + availableMarkets[selectedMarket]);
         yield return uwr.SendWebRequest();
     }
 
     IEnumerator sendScannedItem()
     {
-        UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/scan-item/" + availableMarkets[selectedMarket]);
+        UnityWebRequest uwr = UnityWebRequest.Get("http://schlenkibus.de:8000/scan-item/" + availableMarkets[selectedMarket]);
         yield return uwr.SendWebRequest();
     }
 
@@ -109,14 +104,11 @@ public class GameManager : MonoBehaviour
             Vector3 maxV = Vector3.Max(corner1.transform.position, corner2.transform.position);
             Vector3 minV = Vector3.Min(corner1.transform.position, corner2.transform.position);
 
-            pos -= minV;
-            maxV -= minV;
-            pos.x /= maxV.x;
-            pos.x = Mathf.Max(0, Mathf.Min(1 - pos.x, 1));
-            pos.z /= maxV.z;
-            pos.z= Mathf.Max(0, Mathf.Min(pos.z, 1));
+            pos -= minV; maxV -= minV;
+            pos.x /= maxV.x; pos.x = Mathf.Max(0, Mathf.Min(1 - pos.x, 1));
+            pos.z /= maxV.z; pos.z= Mathf.Max(0, Mathf.Min(pos.z, 1));
 
-            UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/player-position/" + availableMarkets[selectedMarket] + "/" + pos.x + "/" + pos.z);
+            UnityWebRequest uwr = UnityWebRequest.Get("http://schlenkibus.de:8000/player-position/" + availableMarkets[selectedMarket] + "/" + pos.x + "/" + pos.z);
             yield return uwr.SendWebRequest();
             yield return new WaitForSeconds(1);
         }
@@ -153,18 +145,13 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            UnityWebRequest uwr = UnityWebRequest.Get("http://192.168.178.165:8000/game-update/" + availableMarkets[selectedMarket]);
+            UnityWebRequest uwr = UnityWebRequest.Get("http://schlenkibus.de:8000/game-update/" + availableMarkets[selectedMarket]);
             yield return uwr.SendWebRequest();
 
             if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.DataProcessingError)
-            {
                 Debug.Log("Error While Sending: " + uwr.error);
-            }
             else
-            {
-                GameState state = JsonUtility.FromJson<GameState>(uwr.downloadHandler.text);
-                applyChanges(state);
-            }
+                applyChanges(JsonUtility.FromJson<GameState>(uwr.downloadHandler.text));
 
             yield return new WaitForSeconds(1.0f);
         }
@@ -172,24 +159,18 @@ public class GameManager : MonoBehaviour
 
     public void applyChanges(GameState newState)
     {
-        //Shelf!
         onShelvesActivateStateChanged.Invoke(newState.activated);
         onNumShelvesItemStockedChanged.Invoke(newState.itemsStocked);
         onNumShelvesItemNeededChanged.Invoke(newState.itemsNeeded);
         onShelvesTimeChanged.Invoke(newState.timer);
         onLevelChanged.Invoke(newState.level);
-
-        //Global!
-        onPlayerMoneyChanged.Invoke(newState.playerMoney);
-        onBossMoneyChanged.Invoke(newState.bossMoney);
-
-        //Register
         onRegisterActivateStateChanged.Invoke(newState.register_activated);
         onRegisterLevelChanged.Invoke(newState.register_level);
         onRegisterTimeChanged.Invoke(newState.register_timer);
         onNumRegisterItemNeededChanged.Invoke(newState.register_itemsNeeded);
         onNumRegisterItemStockedChanged.Invoke(newState.register_itemsStocked);
-
+        onPlayerMoneyChanged.Invoke(newState.playerMoney);
+        onBossMoneyChanged.Invoke(newState.bossMoney);
         gameState = newState;
     }
 }
